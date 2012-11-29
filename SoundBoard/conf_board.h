@@ -2,6 +2,7 @@
 #define CONF_BOARD_H_
 
 #define ADC_SPI                 (&AVR32_SPI1)
+#define ADC_SPI_IRQ				AVR32_SPI1_IRQ
 #define ADC_SPI_NPCS            0
 #define ADC_SPI_SCK_PIN         AVR32_SPI1_SCK_0_2_PIN
 #define ADC_SPI_SCK_FUNCTION    AVR32_SPI1_SCK_0_2_FUNCTION

@@ -25,6 +25,11 @@ volatile static COMPILER_WORD_ALIGNED int16_t samples[SAMPLES_PER_PACKET];
 volatile static int sampleIndex = 0;
 
 
+extern volatile int16_t latestSamples1[];
+extern volatile int16_t latestSamples2[];
+extern volatile uint8_t latestSelector[];
+
+
 /**
  * \brief TC interrupt.
  *
@@ -69,7 +74,13 @@ static void tc_irq(void)
 		*/
 	
 		for ( int j = 0; j < IN_FORMAT_NB_CHANNELS; j++ ) {
-			samples[sampleIndex] = LE16( ADC_ReadSampleAndSetNextAddr( (j+1) % IN_FORMAT_NB_CHANNELS ) );
+			//samples[sampleIndex] = LE16( ADC_ReadSampleAndSetNextAddr( (j+1) % IN_FORMAT_NB_CHANNELS ) );
+			if ( latestSelector[j] ) {
+				samples[sampleIndex] = LE16( latestSamples2[j] );
+			} else {
+				samples[sampleIndex] = LE16( latestSamples1[j] );
+			}
+			//samples[sampleIndex] = LE16( latestSamples[j] );
 			sampleIndex++;
 			
 			if ( sampleIndex >= SAMPLES_PER_PACKET ) {

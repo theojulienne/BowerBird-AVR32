@@ -45,7 +45,7 @@
 #define ADC_CR_LSB (ADC_RANGE_REFIN | ADC_CODING_TWOS_COMPLEMENT) // can't use 2XREFIN on avr32 board since running at 3.3v --theoj
 #define ADC_CR_ADDR(x) (ADC_CR_MSB | ADC_ADDR(x) | ADC_CR_LSB)
 
-#define ADC_CR_SHIFT(x) (x << 4)
+#define ADC_CR_SHIFT(x) ((x) << 4)
 
 #if 0
 // write to the ADC's control register (MSB)
@@ -76,7 +76,7 @@
 #include <stdint.h>
 
 /* Initialise the SPI interface and the ADC. */
-void ADC_Init(void);
+int ADC_Init(void);
 
 int16_t ADC_ReadSampleAndSetNextAddr(const uint8_t address);
 

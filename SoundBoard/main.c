@@ -25,6 +25,12 @@ int main(void);
 #define SAMPLES_PER_PACKET (EP_SIZE_IN / SAMPLE_SIZE)
 */
 
+extern volatile int spiHandlerCalled;
+extern volatile uint32_t spiWrites;
+
+extern volatile int16_t latestSamples1[];
+extern volatile int latestChannel;
+
 static void main_loop( ) {
 	int in;
 	
@@ -47,9 +53,9 @@ static void main_loop( ) {
 	
 	printf( "result = %d\r\n", result );
 	
-	printf( "Initialising ADC...\r\n" );
+	/*printf( "Initialising ADC...\r\n" );
 	ADC_Init( );
-	printf( "Done!\r\n" );
+	printf( "Done!\r\n" );*/
 	
 	while ( true ) {
 		if ( udi_cdc_is_rx_ready() ) {
@@ -83,7 +89,9 @@ static void main_loop( ) {
 			if ( in == 'a' ) {
 //				printf( "Testing SPI...\r\n" );
 				
-				printf( "%x\r\n", ADC_ReadSampleAndSetNextAddr( 4 ) );
+				printf( "#%d,#%d -> [%d] %d,%d,%d,%d,%d,%d,%d,%d\r\n", spiHandlerCalled, spiWrites, latestChannel, latestSamples1[0], latestSamples1[1], latestSamples1[2], latestSamples1[3], latestSamples1[4], latestSamples1[5], latestSamples1[6], latestSamples1[7] );
+				printf( "status = %d\r\n", spi_getStatus(ADC_SPI) );
+				//printf( "read=%x\r\n", ADC_ReadSampleAndSetNextAddr( 4 ) );
 				/*
 				printf( "%d\r\n", ADC_ReadSampleAndSetNextAddr( 0 ) );
 				printf( "%d\r\n", ADC_ReadSampleAndSetNextAddr( 1 ) );
@@ -117,14 +125,13 @@ int main()
 	sysclk_init();
 	board_init();
 	
-	//ADC_Init( );
-	
-    // Initialize interrupt vector table support.
+	// Initialize interrupt vector table support.
     irq_initialize_vectors();
 
     // Enable interrupts
     cpu_irq_enable();
 
+	ADC_Init( );
 	tc_init(EXAMPLE_TC);
 
 	/* Call a local utility routine to initialize C-Library Standard I/O over

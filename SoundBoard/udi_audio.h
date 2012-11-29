@@ -96,7 +96,7 @@ extern "C" {
 #define  AS_IN_FORMAT_TAG                    AUDIO_FORMAT_TI_PCM              // PCM Format
 // Format type
 #define  IN_FORMAT_TYPE                      AUDIO_FORMAT_TYPE_I              // Format TypeI
-#define  IN_FORMAT_NB_CHANNELS               0x04                             // One Channel
+#define  IN_FORMAT_NB_CHANNELS               0x02                             // One Channel
 #define  IN_FORMAT_FRAME_SIZE                0x02                             // Two bytes per audio sample
 #define  IN_FORMAT_BIT_RESOLUTION            0x10                             // 16 bits per sample
 #define  IN_FORMAT_SAMPLE_FREQ_NB            0x01                             // One frequency supported
@@ -105,7 +105,7 @@ extern "C" {
 #else
 # define  IN_FORMAT_LSBYTE_SAMPLE_FREQ        0xAC44                           // 0x00AC44=44.1 kHz Sample frequency
 #endif*/
-#define  IN_FORMAT_LSBYTE_SAMPLE_FREQ        (16000)
+#define  IN_FORMAT_LSBYTE_SAMPLE_FREQ        (32000)
 #define  IN_FORMAT_MSBYTE_SAMPLE_FREQ        0x00                             // MsByte of 0x001F40
  //Audio endpoint specific descriptor field
 #define  AUDIO_EP_IN_ATRIBUTES               0x00                             // No sampling freq, no pitch, no pading
